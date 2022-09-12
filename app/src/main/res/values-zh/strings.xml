@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">🐷</string>
     <string name="app_home">源</string>
-    <string name="app_source">https://jyt0106.github.io/t/tt2.json</string>
+    <string name="app_source"></string>
 
     // Home Page //
     <string name="hm_ok">🐷🐷开饭成功</string>
