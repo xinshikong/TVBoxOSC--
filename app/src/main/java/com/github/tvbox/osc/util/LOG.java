@@ -42,7 +42,7 @@ public class LOG {
             if (file == null) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                 Date now = dateFormat.parse(dateFormat.format(new Date(System.currentTimeMillis())));
-                File logDir = new File(context.getFilesDir().getAbsolutePath() + "/logs/");
+                 File logDir = new File(context.getExternalFilesDir("logs").getAbsolutePath());
                 if (!logDir.exists())
                     logDir.mkdirs();
                 else{ // 删除超时日志文件
