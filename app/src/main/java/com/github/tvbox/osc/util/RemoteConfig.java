@@ -121,7 +121,7 @@ public class RemoteConfig {
        // if (GetValue(RemoteConfigName.HomeHistoryNum)!=null) {
         //    int remoteValue =  GetValue(RemoteConfigName.HomeHistoryNum).getAsInt();
           //  SetRemoteHawkConfig(HawkConfig.HISTORY_NUM, remoteValue,"默认历史记录");
-        }
+       // }
         // endregion 默认历史记录
         // region 默认画面缩放
         if (GetValue(RemoteConfigName.HomePictureZoom)!=null) {
