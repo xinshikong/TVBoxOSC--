@@ -77,18 +77,9 @@
                 android:text="以后再说"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="16sp" />
-        </LinearLayout>
+      
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/radius_10"
-            android:layout_alignBottom="@id/msg_tv"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="-30dp"
-            android:max="100"
-            android:progress="0" />
+     
 
         <TextView
             android:id="@+id/progressBarText"
