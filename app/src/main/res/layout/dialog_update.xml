@@ -87,8 +87,8 @@
             android:layout_alignBottom="@id/msg_tv"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="-30dp"
-            android:max="100"/>
-           
+            android:max="100"
+            android:progress="0" />
 
         <TextView
             android:id="@+id/progressBarText"
