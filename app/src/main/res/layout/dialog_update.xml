@@ -3,14 +3,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-       <RelativeLayout
+    <RelativeLayout
         android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@color/color_FFFFFF"
         android:paddingBottom="20dp">
-               
-                 <TextView
+
+        <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,13 +20,14 @@
             android:text="发现新版本"
             android:textSize="20sp" />
 
-            <View
+        <View
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/title"
             android:background="#4a7acd" />
-             <TextView
+
+        <TextView
             android:id="@+id/log_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,28 +44,29 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
                 android:text="更新日志"
-                    android:textSize="16sp" />
+            android:textSize="16sp" />
 
-           <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_below="@+id/msg_tv"
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
-               <Button
+            <Button
                 android:id="@+id/yes_btn"
                     android:layout_width="0dp"
-                     android:layout_height="35dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                 android:background="#4a7acd"
+                android:background="#4a7acd"
                 android:gravity="center"
                 android:text="立即更新"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="16sp" />
-  <Button
+
+            <Button
                 android:id="@+id/no_btn"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
