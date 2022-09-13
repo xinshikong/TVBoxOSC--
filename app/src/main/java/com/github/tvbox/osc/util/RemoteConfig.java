@@ -67,20 +67,18 @@ public class RemoteConfig {
             LOG.i("RemoteConfig", "远端关闭日志保存");
             LOG.ClsoeSaveLog();
         }
+        // endregion 日志
 
-        //region 默认配置
+        // region 默认配置
         // region 默认API地址
         if (GetValue(RemoteConfigName.APIUrl)!=null && !GetValue(RemoteConfigName.APIUrl).getAsString().isEmpty()) {
-           String remoteValue = GetValue(RemoteConfigName.APIUrl).getAsString();
+            String remoteValue = GetValue(RemoteConfigName.APIUrl).getAsString();
             if(SetRemoteHawkConfig(HawkConfig.API_URL, remoteValue,"默认首页API")){
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("useCache", true);
                 BaseActivity currActivity = (BaseActivity)AppManager.getInstance().currentActivity();
                 currActivity.jumpActivity(HomeActivity.class, bundle);
-                Intent intent = new Intent(App.getInstance().getBaseContext(), HomeActivity.class);
-                intent.putExtras(bundle);
-                App.getInstance().startActivity(intent);
-             }
+            }
         }
         // endregion 默认API地址
         // region 默认首页数据源
@@ -118,7 +116,7 @@ public class RemoteConfig {
             int remoteValue =  GetValue(RemoteConfigName.HomeHistoryNum).getAsInt();
             SetRemoteHawkConfig(HawkConfig.HISTORY_NUM, remoteValue,"默认历史记录");
         }
-         // endregion 默认历史记录
+        // endregion 默认历史记录
         // region 默认画面缩放
         if (GetValue(RemoteConfigName.HomePictureZoom)!=null && !GetValue(RemoteConfigName.HomePictureZoom).getAsString().isEmpty()) {
             int remoteValue =  GetValue(RemoteConfigName.HomePictureZoom).getAsInt();
@@ -132,16 +130,17 @@ public class RemoteConfig {
         }
         // endregion 默认窗口预览
 
-          // endregion 默认配置
+        // endregion 默认配置
+
         // region 默认更新地址
-      if (GetValue(RemoteConfigName.UpdateData)!=null && GetValue(RemoteConfigName.UpdateData).getAsJsonObject() != null) {
+        if (GetValue(RemoteConfigName.UpdateData)!=null && GetValue(RemoteConfigName.UpdateData).getAsJsonObject() != null) {
             JsonObject updateData = GetValue(RemoteConfigName.UpdateData).getAsJsonObject();
-           LOG.i("RemoteConfig", "★远端设置", "默认更新数据", updateData.toString());
+            LOG.i("RemoteConfig", "★远端设置", "默认更新数据", updateData.toString());
             if (GetValue(RemoteConfigName.IsForceUpdate)!=null && GetValue(RemoteConfigName.IsForceUpdate).getAsBoolean()){
                 LOG.i("RemoteConfig", "★远端设置", "启动强制显示更新");
                 UpdateDialog.checkUpdate(AppManager.getInstance().currentActivity(), false);
             }else {
-                  LOG.i("RemoteConfig", "★远端设置", "启动非强制显示更新");
+                LOG.i("RemoteConfig", "★远端设置", "启动非强制显示更新");
             }
         }
         // endregion 默认更新地址
@@ -162,10 +161,10 @@ public class RemoteConfig {
                 if (!Hawk.get(hawkConfigName, false))
                     isPut = true;
             }
-             }else{
-            isPut = true; 
+        }else{
+            isPut = true;
         }
-     if(isPut){
+        if(isPut){
             LOG.i("RemoteConfig",  "★远端设置", remoteTips, "老值："+oldValue, "新值："+remoteValue);
             Hawk.put(hawkConfigName, remoteValue);
             return true;
