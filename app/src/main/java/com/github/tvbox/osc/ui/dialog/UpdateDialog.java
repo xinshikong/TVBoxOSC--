@@ -66,7 +66,7 @@ public class UpdateDialog extends BaseDialog  {
     private TextView msg_tv;
     private Button update;
     private Button notNow;
-     private ProgressBar progressBar;
+    private ProgressBar progressBar;
     private TextView progressBarText;
 
 
@@ -85,7 +85,7 @@ public class UpdateDialog extends BaseDialog  {
         msg_tv.setText(UpdateDesc);
         update = findViewById(R.id.yes_btn);
         notNow = findViewById(R.id.no_btn);
-          progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
         progressBarText = findViewById(R.id.progressBarText);
         progressBar.setVisibility(View.GONE);
         progressBarText.setVisibility(View.GONE);
@@ -93,7 +93,6 @@ public class UpdateDialog extends BaseDialog  {
             @Override
             public void onClick(View v) {
                 download(UpdateUrl);
-               
             }
         });
         notNow.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +105,14 @@ public class UpdateDialog extends BaseDialog  {
 
     @Override
     public void onBackPressed() {
-       if (!ForceUpdate){
+        if (!ForceUpdate){
             super.onBackPressed();
             dismiss();
         }else{
             showToast("强制更新，无法退出！");
         }
     }
+
 
     @Override
     public void show() {
@@ -129,7 +129,7 @@ public class UpdateDialog extends BaseDialog  {
      */
     public static void checkUpdate(Context context, boolean isOnlyCheck) {
         IsNewUpdate = false;
-         JsonObject updateJosn = null;
+        JsonObject updateJosn = null;
         try {
             updateJosn = RemoteConfig.GetValue(RemoteConfigName.UpdateData).getAsJsonObject();
         }catch (Exception e){
@@ -180,8 +180,8 @@ public class UpdateDialog extends BaseDialog  {
         }catch (Throwable th){
             th.printStackTrace();
         };
-    
     }
+
 
     /**
      * 显示更新对话框
@@ -201,7 +201,7 @@ public class UpdateDialog extends BaseDialog  {
      */
     private void download(String download_path) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-             String target = String.format("%s/%s.apk", context.getExternalFilesDir("downloads").getAbsolutePath(), MD5.encode(NewVersion));
+            String target = String.format("%s/%s.apk", context.getExternalFilesDir("downloads").getAbsolutePath(), MD5.encode(NewVersion));
             File file = new File(target);
             if (file.exists()) {
                 InstallApk(file);
@@ -215,7 +215,6 @@ public class UpdateDialog extends BaseDialog  {
             progressBarText.setVisibility(View.VISIBLE);
             this.setCancelable(false);
             OkGo.<File>get(download_path).tag("down_apk").execute(new FileCallback(context.getExternalFilesDir("downloads").getAbsolutePath(), MD5.encode(NewVersion)+".tapk") {
-
                 @Override
                 public void onStart(Request<File, ? extends Request> request) {
                     showToast("更新开始下载...");
@@ -231,7 +230,7 @@ public class UpdateDialog extends BaseDialog  {
                 public void downloadProgress(Progress progress) {
                     LOG.i("更新下载进度", progress.toString());
                     int cur = (int)(progress.fraction*100);
-                     progressBar.setProgress(cur);
+                    progressBar.setProgress(cur);
                     progressBarText.setText(cur + "%");
                     builder.setProgress(100, cur, false)//更新进度
                             .setContentText(cur + "%");
@@ -241,7 +240,7 @@ public class UpdateDialog extends BaseDialog  {
                 @Override
                 public void onSuccess(Response<File> response) {
                     LOG.i("更新下载完成...");
-                     progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     progressBarText.setVisibility(View.GONE);
                     manager.cancel(UPDATE_ID);//取消通知栏下载提示
                     String apkPath = response.body().getAbsoluteFile().getAbsolutePath().replace(".tapk", ".apk");
@@ -251,7 +250,7 @@ public class UpdateDialog extends BaseDialog  {
                         response.body().getAbsoluteFile().delete();
                         InstallApk(file);
                     }catch (Exception e){
-                         LOG.e("UpdateDialog", "tapk 到 apk复制失败，导致安装失败");
+                        LOG.e("UpdateDialog", "tapk 到 apk复制失败，导致安装失败");
                         e.printStackTrace();
                     }
                 }
@@ -266,8 +265,7 @@ public class UpdateDialog extends BaseDialog  {
             showToast("SD卡没有插好");
         }
     }
-
-  //下载成功后自动安装apk并打开
+    //下载成功后自动安装apk并打开
     private void InstallApk(File file){
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
@@ -286,8 +284,7 @@ public class UpdateDialog extends BaseDialog  {
         }catch (Exception e){
             LOG.e("更新下载安装出现异常",e.toString());
         }
-    } 
-    
+    }
     public void showToast(String msg){
         if (toast==null)
             toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
