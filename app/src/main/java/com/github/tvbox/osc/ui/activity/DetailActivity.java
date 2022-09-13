@@ -128,6 +128,7 @@ public class DetailActivity extends BaseActivity {
     private View seriesFlagFocus = null;
      private boolean isReverse;
     private String preFlag="";
+    private boolean firstReverse;
     private V7GridLayoutManager mGridViewLayoutMgr = null;
     private BroadcastReceiver pipActionReceiver;
      private static final int PIP_BOARDCAST_ACTION_PREV = 0;
@@ -175,7 +176,7 @@ public class DetailActivity extends BaseActivity {
         mGridView.setHasFixedSize(false);
         this.mGridViewLayoutMgr = new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 6 : 7);
         mGridView.setLayoutManager(this.mGridViewLayoutMgr);
-//        mGridView.setLayoutManager(new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 6 : 7));
+
         mGridView.setLayoutManager(new V7GridLayoutManager(this.mContext, isBaseOnWidth() ? 6 : 7));
         seriesAdapter = new SeriesAdapter();
         mGridView.setAdapter(seriesAdapter);
