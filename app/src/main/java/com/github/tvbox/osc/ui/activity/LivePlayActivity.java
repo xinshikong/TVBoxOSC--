@@ -393,24 +393,28 @@ public class LivePlayActivity extends BaseActivity {
         if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideSettingLayoutRun);
             mHandler.post(mHideSettingLayoutRun);
-        }
-        if (tvLeftChannelListLayout.getVisibility() == View.INVISIBLE) {
-                    //  mRightEpgList.setVisibility(View.GONE);
-            //  txtNoEpg.setVisibility(View.GONE);
-            //  divLoadEpgleft.setVisibility(View.GONE);
-            //  divLoadEpg.setVisibility(View.VISIBLE);
-            //  mChannelGroupView.setVisibility(View.VISIBLE);
-            //重新载入上一次状态
-            liveChannelItemAdapter.setNewData(getLiveChannels(currentChannelGroupIndex));
-            if (currentLiveChannelIndex > -1)
-                mLiveChannelView.scrollToPosition(currentLiveChannelIndex);
-            mLiveChannelView.setSelection(currentLiveChannelIndex);
-            mChannelGroupView.scrollToPosition(currentChannelGroupIndex);
-            mChannelGroupView.setSelection(currentChannelGroupIndex);
-            mHandler.postDelayed(mFocusCurrentChannelAndShowChannelList, 200);
+
         } else {
-            mHandler.removeCallbacks(mHideChannelListRun);
-            mHandler.post(mHideChannelListRun);
+            if (tvLeftChannelListLayout.getVisibility() == View.INVISIBLE) {
+
+                //  mRightEpgList.setVisibility(View.GONE);
+                //  txtNoEpg.setVisibility(View.GONE);
+                //  divLoadEpgleft.setVisibility(View.GONE);
+                //  divLoadEpg.setVisibility(View.VISIBLE);
+                //  mChannelGroupView.setVisibility(View.VISIBLE);
+
+                //重新载入上一次状态
+                liveChannelItemAdapter.setNewData(getLiveChannels(currentChannelGroupIndex));
+                if (currentLiveChannelIndex > -1)
+                    mLiveChannelView.scrollToPosition(currentLiveChannelIndex);
+                mLiveChannelView.setSelection(currentLiveChannelIndex);
+                mChannelGroupView.scrollToPosition(currentChannelGroupIndex);
+                mChannelGroupView.setSelection(currentChannelGroupIndex);
+                mHandler.postDelayed(mFocusCurrentChannelAndShowChannelList, 200);
+            } else {
+                mHandler.removeCallbacks(mHideChannelListRun);
+                mHandler.post(mHideChannelListRun);
+            }
         }
     }
 
@@ -469,18 +473,16 @@ public class LivePlayActivity extends BaseActivity {
                 if (holder != null)
                     holder.itemView.requestFocus();
                 tvLeftChannelListLayout.setVisibility(View.VISIBLE);
-                ViewObj viewObj = new ViewObj(tvLeftChannelListLayout, (ViewGroup.MarginLayoutParams) tvLeftChannelListLayout.getLayoutParams());
-                ObjectAnimator animator = ObjectAnimator.ofObject(viewObj, "marginLeft", new IntEvaluator(), -tvLeftChannelListLayout.getLayoutParams().width, 0);
-                animator.setDuration(200);
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        mHandler.removeCallbacks(mHideChannelListRun);
-                        mHandler.postDelayed(mHideChannelListRun, 8000);
-                    }
-                });
-                animator.start();
+                tvLeftChannelListLayout.setAlpha(0.0f);
+                tvLeftChannelListLayout.setTranslationX(-tvLeftChannelListLayout.getWidth());
+                tvLeftChannelListLayout.animate()
+                        .translationX(0)
+                        .alpha(1.0f)
+                        .setDuration(400)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(null);
+                mHandler.removeCallbacks(mHideChannelListRun);
+                mHandler.postDelayed(mHideChannelListRun, 10000);
             }
         }
     };
@@ -495,17 +497,19 @@ public class LivePlayActivity extends BaseActivity {
                 //   divLoadEpgleft.setVisibility(View.INVISIBLE);
                 //   divLoadEpg.setVisibility(View.VISIBLE);
                 //   mChannelGroupView.setVisibility(View.VISIBLE);
-                ViewObj viewObj = new ViewObj(tvLeftChannelListLayout, params);
-                ObjectAnimator animator = ObjectAnimator.ofObject(viewObj, "marginLeft", new IntEvaluator(), 0, -tvLeftChannelListLayout.getLayoutParams().width);
-                animator.setDuration(200);
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
-                    }
-                });
-                animator.start();
+               tvLeftChannelListLayout.animate()
+                        .translationX(-tvLeftChannelListLayout.getWidth())
+                        .alpha(0.0f)
+                        .setDuration(400)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tvLeftChannelListLayout.setVisibility(View.INVISIBLE);
+                                tvLeftChannelListLayout.clearAnimation();
+                            }
+                        });
             }
         }
     };
@@ -851,43 +855,40 @@ public class LivePlayActivity extends BaseActivity {
                 RecyclerView.ViewHolder holder = mSettingGroupView.findViewHolderForAdapterPosition(0);
                 if (holder != null)
                     holder.itemView.requestFocus();
-                tvRightSettingLayout.setVisibility(View.VISIBLE);
                 tvChannelInfo.setVisibility(View.INVISIBLE);
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvRightSettingLayout.getLayoutParams();
-                if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
-                    ViewObj viewObj = new ViewObj(tvRightSettingLayout, params);
-                    ObjectAnimator animator = ObjectAnimator.ofObject(viewObj, "marginRight", new IntEvaluator(), -tvRightSettingLayout.getLayoutParams().width, 0);
-                    animator.setDuration(200);
-                    animator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            mHandler.postDelayed(mHideSettingLayoutRun, 8000);
-                        }
-                    });
-                    animator.start();
-                }
+                tvRightSettingLayout.setVisibility(View.VISIBLE);
+                tvRightSettingLayout.setAlpha(0.0f);
+                tvRightSettingLayout.setTranslationX(tvRightSettingLayout.getWidth());
+                tvRightSettingLayout.animate()
+                        .translationX(0)
+                        .alpha(1.0f)
+                        .setDuration(400)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(null);
+                mHandler.removeCallbacks(mHideSettingLayoutRun);
+                mHandler.postDelayed(mHideSettingLayoutRun, 10000);
             }
         }
     };
 
     private Runnable mHideSettingLayoutRun = new Runnable() {
         @Override
-        public void run() {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvRightSettingLayout.getLayoutParams();
+        public void run() { 
             if (tvRightSettingLayout.getVisibility() == View.VISIBLE) {
-                ViewObj viewObj = new ViewObj(tvRightSettingLayout, params);
-                ObjectAnimator animator = ObjectAnimator.ofObject(viewObj, "marginRight", new IntEvaluator(), 0, -tvRightSettingLayout.getLayoutParams().width);
-                animator.setDuration(200);
-                animator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        tvRightSettingLayout.setVisibility(View.INVISIBLE);
-                        liveSettingGroupAdapter.setSelectedGroupIndex(-1);
-                    }
-                });
-                animator.start();
+                  tvRightSettingLayout.animate()
+                        .translationX(tvRightSettingLayout.getWidth())
+                        .alpha(0.0f)
+                        .setDuration(400)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tvRightSettingLayout.setVisibility(View.INVISIBLE);
+                                tvRightSettingLayout.clearAnimation();
+                                liveSettingGroupAdapter.setSelectedGroupIndex(-1);
+                            }
+                        });
             }
         }
     };
