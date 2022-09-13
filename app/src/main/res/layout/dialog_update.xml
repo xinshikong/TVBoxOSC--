@@ -9,8 +9,7 @@
         android:layout_centerInParent="true"
         android:background="@color/color_FFFFFF"
         android:paddingBottom="20dp">
-
-            <TextView
+               
                  <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
