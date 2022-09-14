@@ -296,6 +296,7 @@ public class VoiceDialog extends BaseDialog {
             };
 
             audioRecord.stop();
+           audioRecord.release(); 
             dos.close();
         } catch (Throwable t) {
             LOG.e("VoiceDialog", "录音失败");
@@ -349,6 +350,7 @@ public class VoiceDialog extends BaseDialog {
                     {
                         VoiceDialog.textCallback.handleMessage(message);
                     }
+                    progressDialog.dismiss();
                     if (!message.obj.toString().isEmpty()){
                         VoiceDialog.getInstance().dismiss();
                     }
