@@ -14,6 +14,11 @@ public class RemoteConfigName {
     public static final String HomePictureZoom="HomePictureZoom"; //默认画面缩放
     public static final String HomeWindowPreview="HomeWindowPreview"; //默认窗口预览
     // endregion
+       // region 语音搜索
+    public static final String VoiceAppID="VoiceAppID"; //讯飞AppID
+    public static final String VoiceApiSecret="VoiceApiSecret"; //讯飞ApiSecret
+    public static final String VoiceApiKey="VoiceApiKey"; //讯飞ApiKey
+    // endregion
 
     // region 直播配置相关
     public static final String Live ="Live"; //直播
