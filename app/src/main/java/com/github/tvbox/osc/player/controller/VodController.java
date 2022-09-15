@@ -232,9 +232,7 @@ public SimpleSubtitleView mSubtitleView;
             Date date = new Date();
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
             mPlayPauseTime.setText(timeFormat.format(date));
-             String speed = PlayerHelper.getDisplaySpeed(mControlWrapper.getTcpSpeed());
-             mPlayLoadNetSpeedRightTop.setText(speed);
-            mPlayLoadNetSpeed.setText(speed);
+            mTime.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
         }
     };
