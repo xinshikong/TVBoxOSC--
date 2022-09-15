@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+
+import com.github.tvbox.osc.subtitle.widget.SimpleSubtitleView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -200,6 +203,7 @@ public class VodController extends BaseController {
     TvRecyclerView mGridView;
     TextView mPlayTitle;
     TextView mNextBtn;
+    TextView mPlayLoadNetSpeedRightTop;
     TextView mPreBtn;
     TextView mPlayerScaleBtn;
     TextView mPlayerSpeedBtn;
@@ -213,7 +217,8 @@ public class VodController extends BaseController {
 
     TextView mTime;
     TextView mTimeEnd;
-
+    
+public SimpleSubtitleView mSubtitleView;
     // takagen99 : Added for Fast Forward Button
     TextView mPlayerFFwd;
     float mSpeed;
