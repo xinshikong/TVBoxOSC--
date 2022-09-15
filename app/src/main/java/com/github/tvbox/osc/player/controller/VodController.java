@@ -233,6 +233,8 @@ public SimpleSubtitleView mSubtitleView;
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
             mPlayPauseTime.setText(timeFormat.format(date));
             mTime.setText(timeFormat.format(date));
+             mPlayLoadNetSpeedRightTop.setText(speed);
+            mPlayLoadNetSpeed.setText(speed);
             mHandler.postDelayed(this, 1000);
         }
     };
@@ -245,6 +247,7 @@ public SimpleSubtitleView mSubtitleView;
         mPlayTitle = findViewById(R.id.tv_title_top);
         mTime = findViewById(R.id.tv_time);
         mTimeEnd = findViewById(R.id.tv_time_end);
+        mPlayLoadNetSpeedRightTop = findViewById(R.id.tv_play_load_net_speed_right_top);
         mSeekBar = findViewById(R.id.seekBar);
         mProgressRoot = findViewById(R.id.tv_progress_container);
         mProgressIcon = findViewById(R.id.tv_progress_icon);
@@ -266,6 +269,8 @@ public SimpleSubtitleView mSubtitleView;
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
         mPlayerFFwd = findViewById(R.id.play_ff);
         mPlayerResolution = findViewById(R.id.tv_resolution);
+        
+        mSubtitleView = findViewById(R.id.subtitle_view);
 
         mTopRoot.setVisibility(INVISIBLE);
         mBottomRoot.setVisibility(INVISIBLE);
