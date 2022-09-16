@@ -266,8 +266,8 @@ public class LivePlayActivity extends BaseActivity {
         initLiveChannelList();
         initLiveSettingGroupList();
     }
-  private void vidHideSysBar() {
-    }
+  
+    
     // takagen99 : Enter PIP if supported
     @Override
     public void onUserLeaveHint() {
