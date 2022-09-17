@@ -266,7 +266,8 @@ public class LivePlayActivity extends BaseActivity {
         initLiveChannelList();
         initLiveSettingGroupList();
     }
-
+  
+    
     // takagen99 : Enter PIP if supported
     @Override
     public void onUserLeaveHint() {
