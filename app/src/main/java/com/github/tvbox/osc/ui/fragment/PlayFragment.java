@@ -199,7 +199,62 @@ public class PlayFragment extends BaseLazyFragment {
         });
         mVideoView.setVideoController(mController);
     }
+ @Override
+            public void selectSubtitle() {
+                SubtitleDialog subtitleDialog = new SubtitleDialog(getContext());
+                subtitleDialog.setSearchSubtitleListener(new SubtitleDialog.SearchSubtitleListener() {
+                    @Override
+                    public void openSearchSubtitleDialog() {
+                        SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(getContext());
+                        searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
+                            @Override
+                            public void loadSubtitle(Subtitle subtitle) {
 
+                                requireActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String zimuUrl = subtitle.getUrl();
+                                        LOG.i("Remote Subtitle Url: " + zimuUrl);
+                                        setSubtitle(zimuUrl);//设置字幕
+                                    }
+                                });
+                            }
+                        });
+                        searchSubtitleDialog.show();
+                    }
+                });
+                subtitleDialog.setLocalFileChooserListener(new SubtitleDialog.LocalFileChooserListener() {
+                    @Override
+                    public void openLocalFileChooserDialog() {
+                        new ChooserDialog(getActivity())
+                                .withFilter(false, false, "srt", "ass", "scc", "stl", "ttml")
+                                .withStartFile("/storage/emulated/0/Download")
+                                .withChosenListener(new ChooserDialog.Result() {
+                                    @Override
+                                    public void onChoosePath(String path, File pathFile) {
+                                        LOG.i("Local Subtitle Path: " + path);
+                                        setSubtitle(path);//设置字幕
+                                    }
+                                })
+                                .build()
+                                .show();
+                    }
+                });
+                subtitleDialog.show();
+            }
+        });
+        mVideoView.setVideoController(mController);
+    }
+    //设置字幕
+    void setSubtitle(String path) {
+        if (path != null && path .length() > 0) {
+            // 设置字幕
+            mController.mSubtitleView.setVisibility(View.INVISIBLE);
+            mController.mSubtitleView.setSubtitlePath(path);
+            mController.mSubtitleView.setVisibility(View.VISIBLE);
+        }
+    }
+    
     void setTip(String msg, boolean loading, boolean err) {
         requireActivity().runOnUiThread(new Runnable() { //影魔
             @Override
