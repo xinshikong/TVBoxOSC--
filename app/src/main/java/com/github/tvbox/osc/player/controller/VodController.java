@@ -1,5 +1,5 @@
 package com.github.tvbox.osc.player.controller;
-
+import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -268,7 +268,7 @@ public SimpleSubtitleView mSubtitleView;
         mPlayerResolution = findViewById(R.id.tv_resolution);
         
         mSubtitleView = findViewById(R.id.subtitle_view);
-
+       mZimuBtn = findViewById(R.id.zimu_select);
         mTopRoot.setVisibility(INVISIBLE);
         mBottomRoot.setVisibility(INVISIBLE);
 
@@ -549,6 +549,13 @@ public SimpleSubtitleView mSubtitleView;
                 updatePlayerCfgView();
             }
         });
+           mZimuBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.selectSubtitle();
+                hideBottom();
+            }
+        });
         // takagen99: Add long press to reset counter
         mPlayerTimeStepBtn.setOnLongClickListener(new OnLongClickListener() {
             @Override
@@ -645,6 +652,8 @@ public SimpleSubtitleView mSubtitleView;
         void replay(boolean replay);
 
         void errReplay();
+        
+        void selectSubtitle();
     }
 
     public void setListener(VodControlListener listener) {
