@@ -48,6 +48,7 @@ import com.github.tvbox.osc.player.MyVideoView;
 import com.github.tvbox.osc.player.controller.VodController;
 import com.github.tvbox.osc.player.thirdparty.MXPlayer;
 import com.github.tvbox.osc.player.thirdparty.ReexPlayer;
+import com.github.tvbox.osc.ui.dialog.SubtitleDialog;
 import com.github.tvbox.osc.player.thirdparty.Kodi;
 import com.github.tvbox.osc.util.AdBlocker;
 import com.github.tvbox.osc.util.DefaultConfig;
@@ -65,6 +66,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
+import com.obsez.android.lib.filechooser.ChooserDialog;
 import com.orhanobut.hawk.Hawk;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,6 +81,7 @@ import org.xwalk.core.XWalkWebResourceRequest;
 import org.xwalk.core.XWalkWebResourceResponse;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -205,10 +208,42 @@ public class PlayActivity extends BaseActivity {
             public void errReplay() {
                 errorWithRetry("视频播放出错", false);
             }
+           
+            @Override
+            public void selectSubtitle() {
+                SubtitleDialog subtitleDialog = new SubtitleDialog(PlayActivity.this);
+                subtitleDialog.setLocalFileChooserListener(new SubtitleDialog.LocalFileChooserListener() {
+                    @Override
+                    public void openLocalFileChooserDialog() {
+                        new ChooserDialog(PlayActivity.this)
+                                .withFilter(false, false, "srt", "ass", "scc", "stl", "ttml")
+                                .withStartFile("/storage/emulated/0/Download")
+                                .withChosenListener(new ChooserDialog.Result() {
+                                    @Override
+                                    public void onChoosePath(String path, File pathFile) {
+                                        LOG.i("Local Subtitle Path: " + path);
+                                        setSubtitle(path);//设置字幕
+                                    }
+                                })
+                                .build()
+                                .show();
+                    }
+                });
+                subtitleDialog.show();
+            }
         });
         mVideoView.setVideoController(mController);
     }
-
+  //设置字幕
+    void setSubtitle(String path) {
+        if (path != null && path .length() > 0) {
+            // 设置字幕
+            mController.mSubtitleView.setVisibility(View.INVISIBLE);
+            mController.mSubtitleView.setSubtitlePath(path);
+            mController.mSubtitleView.setVisibility(View.VISIBLE);
+        }
+    }
+   
     void setTip(String msg, boolean loading, boolean err) {
         try {
             mPlayLoadTip.setText(msg);
@@ -302,17 +337,12 @@ public class PlayActivity extends BaseActivity {
                          mController.resetSpeed();
 
                         //加载字幕开始
-                        String zimuUrl = "";
-                        if (zimuBase64Url != null && zimuBase64Url.length() > 0) {
-                            zimuUrl = new String(Base64.decode(zimuBase64Url, Base64.DEFAULT));
-                            mController.mSubtitleView.setVisibility(View.GONE);
-                        }
-                       if(zimuUrl.isEmpty())zimuUrl=playSubtitle;
-                         if (zimuUrl != null && zimuUrl .length() > 0) {
-                            // 绑定MediaPlayer
-                            mController.mSubtitleView.bindToMediaPlayer(mVideoView.getMediaPlayer());
+                           // 绑定MediaPlayer
+                        mController.mSubtitleView.bindToMediaPlayer(mVideoView.getMediaPlayer());
+                        mController.mSubtitleView.setVisibility(View.INVISIBLE);
+                        if (playSubtitle != null && playSubtitle .length() > 0) {
                             // 设置字幕
-                            mController.mSubtitleView.setSubtitlePath(zimuUrl);
+                          mController.mSubtitleView.setSubtitlePath(playSubtitle);
                             mController.mSubtitleView.setVisibility(View.VISIBLE);
                         }
                        //加载字幕结束
@@ -969,25 +999,25 @@ public class PlayActivity extends BaseActivity {
                     mXwalkWebView.stopLoading();
                     Map<String, String> map = new HashMap<String, String>();
 
-                    if (webUserAgent != null) {
+                               if(webUserAgent != null) {
                         mXwalkWebView.getSettings().setUserAgentString(webUserAgent);
-                    }
-                    //mXwalkWebView.clearCache(true);
-                    if (webHeaderMap != null) {
-                        mXwalkWebView.loadUrl(url, webHeaderMap);
-                    } else {
-                        mXwalkWebView.loadUrl(url);
-                    }
                 }
-                if (mSysWebView != null) {
+                                  //mXwalkWebView.clearCache(true);
+                    if(webHeaderMap != null){
+                        mXwalkWebView.loadUrl(url,webHeaderMap);
+                    }else {
+                        mXwalkWebView.loadUrl(url);
+                }
+            }
+                      if (mSysWebView != null) {
                     mSysWebView.stopLoading();
-                    if (webUserAgent != null) {
+                    if(webUserAgent != null) {
                         mSysWebView.getSettings().setUserAgentString(webUserAgent);
                     }
                     //mSysWebView.clearCache(true);
-                    if (webHeaderMap != null) {
-                        mSysWebView.loadUrl(url, webHeaderMap);
-                    } else {
+                    if(webHeaderMap != null){
+                        mSysWebView.loadUrl(url,webHeaderMap);
+                    }else {
                         mSysWebView.loadUrl(url);
                     }
                 }
