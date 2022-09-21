@@ -18,7 +18,7 @@
         android:paddingBottom="@dimen/vs_20"
         android:tag="top_container_hide"
         android:visibility="gone">
-        
+           <LinearLayout
         <com.github.tvbox.osc.subtitle.widget.SimpleSubtitleView
         android:id="@+id/subtitle_view"
         android:layout_width="match_parent"
