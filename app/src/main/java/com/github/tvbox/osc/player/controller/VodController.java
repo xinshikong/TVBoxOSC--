@@ -1,5 +1,5 @@
 package com.github.tvbox.osc.player.controller;
-
+import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -217,8 +217,9 @@ public class VodController extends BaseController {
 
     TextView mTime;
     TextView mTimeEnd;
-    
+   
 public SimpleSubtitleView mSubtitleView;
+     public TextView mZimuBtn;
     // takagen99 : Added for Fast Forward Button
     TextView mPlayerFFwd;
     float mSpeed;
@@ -266,9 +267,9 @@ public SimpleSubtitleView mSubtitleView;
         mPlayerTimeStepBtn = findViewById(R.id.play_time_step);
         mPlayerFFwd = findViewById(R.id.play_ff);
         mPlayerResolution = findViewById(R.id.tv_resolution);
-        
+        mZimuBtn = findViewById(R.id.zimu_select);
         mSubtitleView = findViewById(R.id.subtitle_view);
-
+       mZimuBtn = findViewById(R.id.zimu_select);
         mTopRoot.setVisibility(INVISIBLE);
         mBottomRoot.setVisibility(INVISIBLE);
 
@@ -549,6 +550,13 @@ public SimpleSubtitleView mSubtitleView;
                 updatePlayerCfgView();
             }
         });
+           mZimuBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.selectSubtitle();
+                hideBottom();
+            }
+        });
         // takagen99: Add long press to reset counter
         mPlayerTimeStepBtn.setOnLongClickListener(new OnLongClickListener() {
             @Override
@@ -645,6 +653,8 @@ public SimpleSubtitleView mSubtitleView;
         void replay(boolean replay);
 
         void errReplay();
+        
+        void selectSubtitle();
     }
 
     public void setListener(VodControlListener listener) {
