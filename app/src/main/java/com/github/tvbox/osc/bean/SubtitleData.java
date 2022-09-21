@@ -1,43 +1,43 @@
 package com.github.tvbox.osc.bean;
 
-public class Subtitle {
+import java.util.List;
 
-    private String name;
+public class SubtitleData {
 
-    private String url;
+    private Boolean isNew;
 
-    private boolean isZip;
+    private List<Subtitle> subtitleList;
 
-    public boolean getIsZip() {
+    private Boolean isZip;
+
+    public Boolean getIsNew() {
+        return isNew;
+    }
+
+    public List<Subtitle> getSubtitleList() {
+        return subtitleList;
+    }
+
+    public Boolean getIsZip() {
         return isZip;
     }
 
-    public String getName() {
-        return name;
+    public void setIsNew(Boolean isNew) {
+        this.isNew = isNew;
     }
 
-    public String getUrl() {
-        return url;
+    public void setSubtitleList(List<Subtitle> subtitle) {
+        this.subtitleList = subtitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setIsZip(boolean zip) {
+    public void setIsZip(Boolean zip) {
         isZip = zip;
     }
 
     @Override
     public String toString() {
-        return "Subtitle{" +
-                "name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", isZip=" + isZip +
+        return "SubtitleData{" +
+                "isNew='" + isNew + '\'' +
                 '}';
     }
 }
