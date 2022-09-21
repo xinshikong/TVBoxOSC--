@@ -822,21 +822,8 @@
                 android:text="1S"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_16" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/parse_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/vs_10"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible">
-
             
-                   <TextView
+                 <TextView
                 android:id="@+id/zimu_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -848,7 +835,22 @@
                 android:text="字幕"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ts_22" /> 
-            </LinearLayout>
+            
+
+
+        </LinearLayout>
+      
+        <LinearLayout
+            android:id="@+id/parse_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/vs_10"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            
+        
             
             <TextView
                 android:layout_width="@dimen/vs_120"
