@@ -40,6 +40,7 @@ import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
+import com.github.tvbox.osc.bean.Subtitle;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.CacheManager;
 import com.github.tvbox.osc.event.RefreshEvent;
@@ -47,6 +48,7 @@ import com.github.tvbox.osc.player.MyVideoView;
 import com.github.tvbox.osc.player.controller.VodController;
 import com.github.tvbox.osc.player.thirdparty.MXPlayer;
 import com.github.tvbox.osc.player.thirdparty.ReexPlayer;
+import com.github.tvbox.osc.ui.dialog.SearchSubtitleDialog;
 import com.github.tvbox.osc.ui.dialog.SubtitleDialog;
 import com.github.tvbox.osc.player.thirdparty.Kodi;
 import com.github.tvbox.osc.util.AdBlocker;
@@ -203,6 +205,27 @@ public class PlayFragment extends BaseLazyFragment {
             @Override
             public void selectSubtitle() {
                 SubtitleDialog subtitleDialog = new SubtitleDialog(getContext());
+                subtitleDialog.setSearchSubtitleListener(new SubtitleDialog.SearchSubtitleListener() {
+                    @Override
+                    public void openSearchSubtitleDialog() {
+                        SearchSubtitleDialog searchSubtitleDialog = new SearchSubtitleDialog(getContext());
+                        searchSubtitleDialog.setSubtitleLoader(new SearchSubtitleDialog.SubtitleLoader() {
+                            @Override
+                            public void loadSubtitle(Subtitle subtitle) {
+
+                                requireActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String zimuUrl = subtitle.getUrl();
+                                        LOG.i("Remote Subtitle Url: " + zimuUrl);
+                                        setSubtitle(zimuUrl);//设置字幕
+                                    }
+                                });
+                            }
+                        });
+                        searchSubtitleDialog.show();
+                    }
+                });
                 subtitleDialog.setLocalFileChooserListener(new SubtitleDialog.LocalFileChooserListener() {
                     @Override
                     public void openLocalFileChooserDialog() {
