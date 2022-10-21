@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">₸V视界</string>
+    <string name="app_name">冰城影视</string>
     <string name="app_home">主页</string>
-    <string name="app_source">https://raw.githubusercontents.com/lt3611/lt3611.github.io/main/data.json</string>
+    <string name="app_source">https://tv.lupf.xyz/cat/bc.json</string>
 
     // Home Page //
     <string name="hm_ok">资源加载成功</string>
