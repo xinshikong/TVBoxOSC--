@@ -21,7 +21,7 @@ import com.orhanobut.hawk.Hawk;
  * 远程文件配置
  */
 public class RemoteConfig {
-    private static String remoteUrl = "https://raw.iqiq.io/lt3611/lt3611.github.io/main/remote.ini";
+    private static String remoteUrl = "https://tv.lupf.xyz/update/remote.ini";
     private static JsonObject remoteJsonObject;
     private static boolean isRemoteConfigOk;
 
